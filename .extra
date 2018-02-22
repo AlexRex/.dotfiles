@@ -1,0 +1,46 @@
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
+# Change kubeconfig
+setKubeconfig() {
+  if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters, include the name of the config file you want to use in the way 'eu qa' or 'us preprod'"
+
+  else
+    if [ "$1" = 'eu' ]; then
+      if [ "$2" = 'dev' ]; then
+        cp /keybase/team/adigts/kubeconfigs/ireland/kubeconfig_ire_gts-dev ~/.kube/config
+        echo "done dev europe"
+      elif [ "$2" = 'qa' ]; then
+        cp /keybase/team/adigts/kubeconfigs/ireland/kubeconfig_ire_gts-qa ~/.kube/config
+        echo "done qa europe"
+      elif [ "$2" = 'preprod' ]; then
+        cp /keybase/team/adigts/kubeconfigs/ireland/kubeconfig_ire_gts-preprod ~/.kube/config
+        echo "done preprod europe"
+      elif [ "$2" = 'prod' ]; then
+        cp /keybase/team/adigts/kubeconfigs/ireland/kubeconfig_ire_gts-prod ~/.kube/config
+        echo "done prod europe"
+      fi
+    elif [ "$1" = 'us' ]; then
+      if [ "$2" = 'dev' ]; then
+        cp /keybase/team/adigts/kubeconfigs/ireland/kubeconfig_ire_gts-dev ~/.kube/config
+        echo "done dev USA"
+      elif [ "$2" = 'qa' ]; then
+        cp /keybase/team/adigts/kubeconfigs/oregon/kubeconfig_ore_gts-qa ~/.kube/config
+        echo "done qa USA"
+      elif [ "$2" = 'preprod' ]; then
+        cp /keybase/team/adigts/kubeconfigs/oregon/kubeconfig_ore_gts-preprod ~/.kube/config
+        echo "done preprod USA"
+      elif [ "$2" = 'prod' ]; then
+        cp /keybase/team/adigts/kubeconfigs/oregon/kubeconfig_ore_gts-prod ~/.kube/config
+        echo "done prod USA"
+      fi
+    fi
+  fi
+}
+
+# Get kubectl with grep
+kbctl() {
+  kubectl get $1 | grep $2
+}
